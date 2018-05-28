@@ -1,0 +1,100 @@
+User's Manual of CAPLIB beta version, 2018
+
+This directory is for the demonstration of CAPLIB.
+Before you try to use the CAPLIB modules, read the article (Yoneda et al., ACSOmega, 2018).
+
+<< Sample runs of CAPGEN >>
+This module generates the entire structure or a set of selected protein units of viral capsid.
+
+1) ../bin/capgen -c0-59 pdb2plv.ent > sample_capgen1_out.pdb
+The entire structure of 2PLV file (poliovirus capsid) is generated in the PDB format.
+If the option "-c0-59" is omitted, the same entire structure is built.
+All the 60 protein units were seperated using the "MODEL" and "ENDMDL" lines of the PDB format.
+Thus if you want to show all the protein units on the PyMol graphics software, use the 'set all_states, on" command.
+
+2) ../bin/capgen -v pdb2plv.ent > sample_capgen2_out.pdb
+The same entire structure of 2PLV is shown as in the above.
+Attention 1: The cell numbers of the CAPLIB cell number system (Read the article by Yoneda et al., 2018) is always adopted. The above command runs well, because the protein unit of pdb2plv.ent is located within the cell 0 of the CAPLIB cell number system. If you want to use the '-v option' for the PDB file in other coordinate system, rotate the PDB structure by the CAPROT module into the CAPLIB standard position before using this option (see Erroneous sample 5 and sample 21)).
+Attention 2: If you visualize the entire structure of the above "sample_capgen2_out.pdb" on PyMOL, the B-factors are automatically scaled so that the cell numbers are not presented correctly with colors. If you want to show the entire structure with the cell numbers shown with colors, remove all the "MODEL" and "ENDMDL" lines in the "sample_capgen2_out.pdb" by, for example, the linux command "grep -v MODEL sample_capgen2_out.pdb|grep -v ENDMDL".
+
+2b) ../bin/capgen -v -c0 pdb2plv.ent > sample_capgen2b_out.pdb
+Only the protein unit 0 is printed. The cell numbers are printed at the B-factor columns.
+Read also 2).
+
+3) ../bin/capgen -c0,2,5-7 pdb2plv.ent > sample_capgen3_out.pdb
+Only the protein units 0, 2, 5, 6, and 7 are generated.
+
+4) ../bin/capgen pdb1auy.ent > sample_capgen4_out.pdb
+The entire structure is built for 1AUY file.
+This is similar to 1), but the translation vectors as well as the rotation matrices written in 1AUY are used.
+
+Erroneous sample 5) ../bin/capgen -v pdb1auy.ent > sample_capgen5.out
+This is an erroneous sample.
+Because the CAPLIB cell number system (or the CAPLIB standard coordinate system) are not adopted in the PDB file 1AUY.
+The cell number printed with the "-v" option is misleading.
+If you want the cell numbers of the atoms for a PDB file with non-standard (i.e., non-CAPLIB) system, use CAPROT to move the structure onto the standard position of CAPLIB before you use CAPGEN (See sample 7 and sample 21).
+
+6) ../bin/capgen -tp pdb2plv.ent > sample_capgen6_out.pdb
+The standard rotation matrices are applied to the generation of the entire structure of pdb2plv.ent.
+The rotation matrices written in the PDB file are not used.
+If you use "-tr" instead of "-tp", the 4RHV coordinate system is adopted.
+The options "-tp" and "-tr" are useful for the PDB files that lack the BIOMT lines 
+(for example, when you analyze the PDB files produced by MD simulations).
+
+7) ../bin/capgen -m pdb2plv.ent pdb4rhv.ent > sample_capgen7_out.pdb
+The rotation matrices of pdb2plv.ent were used for the generation of the entire structure of pdb4rhv.ent.
+Of course, the result is errorneous. 
+However, the "-m" option, "-tp" option, and "-tr" option are useful for the PDB files lack the BIOMT lines, for examples, in studies of MD simulations.
+If you use "../bin/capgen -m pdb4rhv.ent pdb4rhv.ent", the correct entire structure is built.
+
+<< Sample runs of CAPAXIS >>
+This module analyses the rotation matrices in the PDB files.
+
+11) ../bin/capaxis pdb4rhv.ent > sample_capaxis11.out
+CAPAXIS analyses the rotation matrices in the 4RHV file.
+
+11b) ../bin/capaxis pdb4rhv.ent pdb2plv.ent > sample_capaxis11b.out
+The rotation matrices in the two files (4RHV and 2PLV) are analysed.
+
+12) ../bin/capaxis -l0pdb60.txt >& sample_capaxis12.out
+The rotation matrices in the many PDB files of icosahedrally symmetric capsids were analysed.
+All the PDB file names are written in 0pdb60.txt.
+(Those many PDB files were deleted after the above calculation in this directory.)
+
+<< Sample runs of CAPROT >>
+This module rotate the PDB structure onto other coordinate systems.
+
+21) ../bin/caprot pdb4rhv.ent pdb2plv.ent > sample_caprot21_out.pdb
+The PDB file of 4RHV (the 4RHV structure in the 4RHV coordinate system) is rotated into the 2PLV position (the 2PLV structure in the 2PLV coordinate system).
+
+<< Sample runs of CAPPACK >>
+31) ../bin/cappack pdb2plv.ent > sample_cappack31_out.pdb
+The "packing operation" necessary for the rotational symmetry boundary condition is performed.
+That is, the atoms locating out of the central cell is rotated into the central cell (See Yoneda et al., J.Comput.Chem. 1996).
+The rotation matrices of the input PDB file must be those of the CAPLIB system.
+Thus use CAPROT (sample 21), if necessary.
+
+31b) ../bin/cappack -v pdb2plv.ent > sample_cappack31b_out.pdb
+The same as above, but the cell numbers before the packing operation are written in the B-factor columns.
+
+<< Sample runs of the Python scripts of CAPLIB with PyMOL >>
+
+41) capgen(1) on PyMOL
+I. Start the graphics software PyMOL.
+II. Enter the following command in the PyMOL command window.
+cd this_directory_containing_the_PDB_file
+III. Open the PDB file by entering the following window, for example.
+load pdb4g93.pdb
+IV. Load the PyMOL script as follows,
+run ../Python/caplib.py
+V. The entire capsid is built by CAPGEN as follows,
+capgen(1)
+VI. The rotation matrices to make the entire structure is from the the file with the same name in the current directory.
+On the PyMOL window, there will be the "all" object, the "pdb4g93" object, and the "OBJ0", "OBJ1", "OBJ2", ..., and "OBJ59" objects buttons.
+The "OBJ0", ..., and "OBJ59" compose the entire capsids.
+42) capswch(50,30) on PyMOL
+I. After showin the graphics of 41), enter the following command on the PyMOL command window,
+setaxis("OBJ2","OBJ1")
+II. Secondly,
+capswch(50,30)
+III. Then a hall is made around the axis between OBJ2 and OBJ1 on the surface of capsid.

@@ -1,0 +1,26 @@
+Note 1: Comments on the previous program "caplib_bak.py"
+Figure 6 in the CAPLIB article (S.Yoneda et al., ACSOmega, 2018) was produced using the older file, "caplib_bak.py".
+"caplib_bak.py calls the C program "caplib5.c" via the "ctypes" library of Python.
+Thus "caplib5.c" is compiled as follows (if necessary, change "cc" to other C compilers),
+	cc -fpic -c capgen5.c
+	cc -shared capgen5.o
+	rm capgen5.o
+	mv a.out capgen5.so
+However, we found that the "ctypes" library does not always work correctly in some PC or PyMOL, although works well on our Mac.
+Thus, "caplib_bak.py" was fully revised into "caplib.py".
+Everything is written in Python and "capgen5.c" is unnecessary.
+
+Note 1b:
+The above revision has a bad point: the Python script can not use all the functions of C programs.
+This problem will be solved in future.
+
+Note 2:
+The "capgen" command in the previous "caplib_bak.py" contained a weak point:
+The PDB file must be stored in the current directory of the PyMol console window, because the BIOMT lines must be read from the file.
+Furthermore, the extention of the file is always assumed to be ".ent".
+In the revised "caplib.py", you can give explicitly the PDB file name including the directory name.
+With "caplib.py", for example, when you use capgen with PyMOL, write as follows, for example,
+	capgen(1,"/Users/username/Desktop/somedirectory/pdb_file_name")
+If the file name is omitted as follows,
+	capgen(1)
+then PyMOL tries to read the PDB file for reading BIOMT lines, in the current directory.
