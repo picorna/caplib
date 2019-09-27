@@ -1,0 +1,9 @@
+References for rotational symmetry boundary conditions
+1. Shigetaka Yoneda, Yukina Hara-Yamada, Aya Kosugi, Maiko Nanao, Takami Saito, Shunsuke Sato, Nozomu Yamada, and Go Watanabe, "CAPLIB: A New Program Library for the Modeling and Analysis of Icosahedrally Symmetric Viral Capsids", ACS Omega 3, 4458-4465, 2018.
+2. Go Watanabe, Shunsuke Sato, Mitsuo Iwadate, Hideaki Umeyama, Michiyo Hayakawa, Yoshiki Murakami, and Shigetaka Yoneda, "Molecular Dynamics Simulations to Determine the Structure and Dynamics of Hepatitis B Virus Capsid Bound to a Novel Anti-viral Drug",  Chemical Pharmaceutical. Bulletin 64(9), 1393?6 (2016).
+3. H. Azuma, S. Yoneda, "Structure and dynamics of the GH loop of the foot-and-mouth disease virus capsid", Journal of MolecularGraphics & Modelling, 28, 278-286, 2009. 
+4. S. Yoneda, T. Yoneda, Y. Kurihara, H. Umeyama, "Motion of an antiviral compound in a rhinovirus capsid under rotational symmetry boundary conditions", Journal of MolecularGraphics & Modelling, 21(1), 19-27, 2002.
+5. T. Yoneda, S. Yoneda, N. Takayama, M. Kitazawa, H. Umeyama, "A Homology Modeling Method of an Icosahedral Viral Capsid: Inclusion of Surrounding Protein Structures", Journal of MolecularGraphics & Modelling, 17(2), 114-119, 1999.
+6. S. Yoneda, "A Further Implementation of the Rotational Symmetry Boundary Conditions for Calculations of P43212 Symmetry Crystals", Journal of MolecularGraphics & Modelling, 15(4), 233-237(color plate 260), 1997.
+7. S. Yoneda, M. Kitazawa, H. Umeyama, "Molecular Dynamics Simulation of a Rhinoviral Capsid under Rotational Symmetry Boundary Conditions", Journal of Computational Chemistry 17(2), 191-203, 1996.
+
