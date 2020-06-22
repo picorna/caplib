@@ -312,7 +312,7 @@ def setaxis(sel1,sel2):
     b = (t[8]-t[2])/math.sqrt((t[6]-t[9])**2+(t[8]-t[2])**2+(t[1]-t[4])**2)
     c = (t[1]-t[4])/math.sqrt((t[6]-t[9])**2+(t[8]-t[2])**2+(t[1]-t[4])**2)
     axis = [a, b, c]
-    print axis
+    print(axis)
     cmd.delete('tmp')
 
 '''
@@ -351,7 +351,7 @@ def capswch(theta,alpha,center=None,axis1=None):
             cmd.rotate ([normal_vect[0],normal_vect[1],normal_vect[2]],(theta - math.degrees(math.acos(angle_cos))), 'ring%s'%i)
             cmd.origin ('ring%s'%i)
             cmd.rotate ([normal_vect[0],normal_vect[1],normal_vect[2]],alpha, 'OBJ%s'%i)
-            exec('print "Rotate OBJ%s"'%i)
+            exec('print("Rotate OBJ {0:%s}".format(i))')
             cmd.delete('ring%s'%i)
 
 '''
@@ -391,9 +391,9 @@ def captwst(theta,alpha,center=None,axis1=None):
             cmd.rotate ([normal_vect[0],normal_vect[1],normal_vect[2]],(theta - math.degrees(math.acos(angle_cos))),'ring%s'%i)
             cmd.origin ('ring%s'%i)
             cmd.iterate_state(1,'ring%s'%i,'stored.pos_ring = [x,y,z]')
-            print stored.pos_ring
+            print(stored.pos_ring)
             cmd.rotate ([stored.pos_ring[0],stored.pos_ring[1],stored.pos_ring[2]],alpha,'OBJ%s'%i)
-            exec('print "Rotate OBJ%s"'%i)
+            exec('print("Rotate OBJ{0:%s}".format(i))')
             cmd.delete('ring%s'%i)
 
 
