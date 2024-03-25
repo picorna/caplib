@@ -240,7 +240,7 @@ void set_planes() {
 	rsbc_planes.axis3[14][0] = -one/root3;
 	rsbc_planes.axis3[14][1] = -one/root3;
 	rsbc_planes.axis3[14][2] = one/root3;
-	//dfh 2-8-4
+	//dfh 2-8-3  <--- This line was previously 2-8-4 (error). Thus corrected.
 	rsbc_planes.axis3[15][0] = one/root3;
 	rsbc_planes.axis3[15][1] = -one/root3;
 	rsbc_planes.axis3[15][2] = one/root3;
