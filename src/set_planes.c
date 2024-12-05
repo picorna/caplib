@@ -118,6 +118,12 @@ void set_planes() {
 	rsbc_planes.axis2[14][0] = -quarter;
 	rsbc_planes.axis2[14][1] = (three+root5)*eighth;
 	rsbc_planes.axis2[14][2] = -(one+root5)*eighth;
+
+	for(int i=0;i<15;i++){
+		rsbc_planes.axis2[15+i][0] = -rsbc_planes.axis2[i][0];
+		rsbc_planes.axis2[15+i][1] = -rsbc_planes.axis2[i][1];
+		rsbc_planes.axis2[15+i][2] = -rsbc_planes.axis2[i][2];
+	}
 	
 	if(DEBUG > 4) {
 		for (i=0; i<15; i++) {
