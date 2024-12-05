@@ -21,8 +21,13 @@
 #define capgen_planes_h
 
 struct _rsbc_planes {
-	double axis2[15][3]; //vectn
-	//number of axis2 is half, because the inverse vector is considered to be the same for axis2.
+//	double axis2[15][3]; //vectn
+// Although previously, the
+// number of axis2 wass half, because the inverse vector is considered to be the 
+// same for axis2, this easily makes bugs in the programs.
+// Thus the following is adopted newly and the 'set_planes.c' is modified..
+	double axis2[30][3]; //vectn
+//
 	double axis3[20][3]; 
 	double axis5[12][3];
 	
