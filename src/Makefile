@@ -74,13 +74,13 @@ OBJS_CAPPACK = cappack_main.o call_cappack.o cappack_call_getopt.o  capgen_gen_e
 	set_2plv_rotmat.o set_bplane.o set_planes.o set_ptable.o \
 	sort_double.o summary_print.o summary_store.o trans_2plvto4rhv.o cappack_usage.o
 
-OBJS_CAPROT = caprot_main.o caprot_call_getopt.o  capgen_gen_entire.o \
+OBJS_CAPROT = caprot_main.o caprot_call_getopt.o  gen_entire.o \
 	analyse_biomt.o calc_cell.o \
 	cell_axis_fit.o cell_axis_fit_any.o \
 	cell_number.o datashift.o eqsolve.o error_print.o error_store.o \
 	for_a_pdb.o front.o \
 	make_orthogonal_matrix.o matrix_determinant.o matrix_inverse.o \
-	matrix_product.o print_a_pdb.o print_center.o print_rot.o \
+	matrix_product.o print_a_pdbs.o print_center.o print_rot.o \
 	read_a_pdb.o read_biomt_file.o read_wat216.o rotate_atoms.o \
 	set_2plv_rotmat.o set_bplane.o set_planes.o set_ptable.o \
 	sort_double.o summary_print.o summary_store.o trans_2plvto4rhv.o caprot_usage.o
