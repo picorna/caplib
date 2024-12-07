@@ -40,7 +40,7 @@
 #include <math.h>
 #include "planes.h"
 
-void make_orthogonal_matrix(double [3][3],double [3],double [3]);
+extern void make_orthogonal_matrix(double [3][3],double [3],double [3]);
 
 /* 1) find the center of all the atoms
  2) find the nearest 5fold, 3fold, two 2fold axes to the center determined above
@@ -51,7 +51,8 @@ void make_orthogonal_matrix(double [3][3],double [3],double [3]);
  */
 int cell_axis_fit(int f_verbose,int natoms,double *pdb_xyz,double axis[60][3],
 				   double theta[60],double rot_fit[3][3]){
-	// axis[60][3] is rotation axes determined by analyse_biomt.c from the BIOMT lines in PDB file
+// axis[60][3] is rotation axes determined by analyse_biomt.c from the BIOMT lines
+// in the PDB file
 	
 	double *xyz;
 	double center[3];
@@ -61,23 +62,22 @@ int cell_axis_fit(int f_verbose,int natoms,double *pdb_xyz,double axis[60][3],
 	int iaxis5,iaxis3;
 	double amatrix[3][3],bmatrix[3][3];
 	int debug = 0;
-	
-	// calculate the center of atoms, center[3]
+//	
+// calculate the center of protein, center[3]
 	xyz = pdb_xyz;
 	center[0] = 0.;
 	center[1] = 0.;
 	center[2] = 0.;
 	for (i=0; i<natoms; i++) {
-		center[0] += *xyz++;
-		center[1] += *xyz++;
-		center[2] += *xyz++;
+		center[0] += *(xyz++);
+		center[1] += *(xyz++);
+		center[2] += *(xyz++);
 	}
 	center[0] /= natoms;
 	center[1] /= natoms;
 	center[2] /= natoms;
-	//printf("center = %8.3f %8.3f %8.3f\n",center[0],center[1],center[2]);
-	
-	// calculate the nearest 5 rotation axes to the center, center[3]
+//	printf("center = %8.3f %8.3f %8.3f\n",center[0],center[1],center[2]);
+// calculate the nearest 5 rotation axes to the center, center[3]
 	dmax[0] = 0.;
 	dmax[1] = 0.;
 	dmax[2] = 0.;
@@ -102,7 +102,7 @@ int cell_axis_fit(int f_verbose,int natoms,double *pdb_xyz,double axis[60][3],
 			}
 		}
 	}
-
+//
 	iaxis5 = -1;
 	iaxis3 = -1;
 	// find the nearest 5fold axes
@@ -138,17 +138,19 @@ int cell_axis_fit(int f_verbose,int natoms,double *pdb_xyz,double axis[60][3],
 	if (debug == 1) {
 		printf("");
 	}
-	/* By the above, the nearest 5fold and 3fold axes (iaxis5 and iaxis3) were determined.
-	 The cell (5fold and 3fold) from the BIOMT lines of PDB file is overalaid onto the 2PLV one by
-	 a rotation matrix, rot_fit[3][3]. rot_fit is determined by the following equation,
-	             A = rot_fit * B
-	 where A and B are orthogonal matrices, and * denotes multiplication of matrices.
-	 A is built from the two axes (iaxis5 and iaxis3) of 2PLV cell zero and B is built from the three axes of BIOMT lines
-	 similarly. Thus,
-				rot_fit = A * tB
-	 where tB is transpose of B, because the inverse matrix of B is the transpose of B.
-	*/
-	
+
+/*
+ By the above, the nearest 5fold and 3fold axes (iaxis5 and iaxis3) were determined.
+ The cell (5fold and 3fold) from the BIOMT lines of PDB file is overalaid onto the
+ 2PLV one by a rotation matrix, rot_fit[3][3]. rot_fit is determined by the following
+ equation,
+		A = rot_fit * B
+ where A and B are orthogonal matrices, and * denotes multiplication of matrices.
+ A is built from the two axes (iaxis5 and iaxis3) of 2PLV cell zero and B is built from
+ the three axes of BIOMT lines similarly. Thus,
+		rot_fit = A * tB
+where tB is transpose of B, because the inverse matrix of B is the transpose of B.
+*/
 	/*double xtmp1[3] = {1.,0.,0.};
 	double xtmp2[3] = {0.,1.,0.};
 	double ytmp1[3] = {0.,1.,0.};
@@ -157,29 +159,33 @@ int cell_axis_fit(int f_verbose,int natoms,double *pdb_xyz,double axis[60][3],
 	double ztmp2[3];
 	make_orthogonal_matrix(amatrix,xtmp1,xtmp2);
 	make_orthogonal_matrix(bmatrix,ytmp1,ytmp2);
+
 	for (i=0; i<3; i++) {
-		for (j=0; j<3; j++) {
-			rot_fit[i][j] = amatrix[i][0]*bmatrix[j][0] + amatrix[i][1]*bmatrix[j][1] + amatrix[i][2]*bmatrix[j][2];
-		}
+	for (j=0; j<3; j++) {
+	rot_fit[i][j] = amatrix[i][0]*bmatrix[j][0] + amatrix[i][1]*bmatrix[j][1] + amatrix[i][2]*bmatrix[j][2];
+	}
 	}
 	for (i=0; i<3; i++) {
-		ztmp2[i] = rot_fit[i][0]*ztmp[0] + rot_fit[i][1]*ztmp[1] + rot_fit[i][2]*ztmp[2];
+	ztmp2[i] = rot_fit[i][0]*ztmp[0] + rot_fit[i][1]*ztmp[1] + rot_fit[i][2]*ztmp[2];
 	}
 	printf("ztmp2 = %8.3f %8.3f %8.3f\n",ztmp2[0],ztmp2[1],ztmp2[2]);
 	exit(1);
 	*/
-	//printf("iaxis5 = %d   iaxis3 = %d\n",iaxis5,iaxis3);
+//	printf("iaxis5 = %d   iaxis3 = %d\n",iaxis5,iaxis3);
+
 	make_orthogonal_matrix(bmatrix,&axis[iaxis5][0],&axis[iaxis3][0]);
-	// cell 0 has 5fold axis, 0, and 3 fold axis, 1-2-3 (cdh, 0-1-2)
+//
+// cell 0 has 5fold axis, 0, and 3 fold axis, 1-2-3 (cdh, 0-1-2)
+//
 	make_orthogonal_matrix(amatrix,&rsbc_planes.axis5[0][0],&rsbc_planes.axis3[4][0]);
-	
+//
 	for (i=0; i<3; i++) {
-		for (j=0; j<3; j++) {
-			rot_fit[i][j] = amatrix[i][0]*bmatrix[j][0] + amatrix[i][1]*bmatrix[j][1] + amatrix[i][2]*bmatrix[j][2];
-		}
-		if (debug == 2) {
-			printf("rot_fit = %8.3f%8.3f%8.3f\n",rot_fit[i][0],rot_fit[i][1],rot_fit[i][2]);
-		}
+	for (j=0; j<3; j++) {
+	rot_fit[i][j] = amatrix[i][0]*bmatrix[j][0] + amatrix[i][1]*bmatrix[j][1] + amatrix[i][2]*bmatrix[j][2];
+	}
+//	if (debug == 2) {
+//	printf("rot_fit = %8.3f%8.3f%8.3f\n",rot_fit[i][0],rot_fit[i][1],rot_fit[i][2]);
+//	}
 	}
 	return EXIT_SUCCESS;
 }
